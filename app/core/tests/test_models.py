@@ -7,7 +7,7 @@ class ModelTests(TestCase):
         password    =   "12345"
         user        =   get_user_model().objects.create_user(
             email       =   email, 
-            password    =   password
+            password    =   password,
         )
         
         self.assertEqual(user.email, email)
