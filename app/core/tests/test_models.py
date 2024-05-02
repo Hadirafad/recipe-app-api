@@ -4,6 +4,9 @@ from decimal import Decimal
 
 from core import models
 
+def create_user(email='user@example.com', password='testpassword'):
+    return  get_user_model().objects.create_user(email=email, password=password)
+
 class ModelTests(TestCase):
     def test_create_user_with_email_success(self):
         email       =   "test@gmail.com"
@@ -44,10 +47,7 @@ class ModelTests(TestCase):
         self.assertTrue(user.is_staff)
         
     def test_create_recipe(self):
-        user = get_user_model().objects.create_user(
-            'test@example.com',
-            'TestPass123'
-        )
+        user = create_user()
         
         recipe = models.Recipe.objects.create(
             user=user, 
@@ -58,3 +58,9 @@ class ModelTests(TestCase):
             )
         
         self.assertEqual(str(recipe), recipe.title)
+        
+    def test_create_tag(self):
+        user = create_user()
+        tag = models.Tag.objects.create(user=user, name="Tag1")
+        
+        self.assertEqual(str(tag), tag.name)
